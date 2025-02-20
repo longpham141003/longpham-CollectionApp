@@ -8,7 +8,7 @@ if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = new Collection([
         ['name' => 'Long1', 'price' => 35000000],
         ['name' => 'Long2', 'price' => 20000000],
-        ['name' => 'Long3', 'price' => 15000000],
+        ['name' => 'aaaaaa', 'price' => 15000000],
         ['name' => 'áiuhfas', 'price' => 500000],
     ]);
 }
