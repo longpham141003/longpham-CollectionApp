@@ -1,5 +1,6 @@
 <?php
 namespace App;
+
 class Collection {
     protected array $items;
 
@@ -30,5 +31,12 @@ class Collection {
 
     public function last() {
         return $this->items[count($this->items) - 1] ?? null;
+    }
+
+    public function remove(int $index): self {
+        if (isset($this->items[$index])) {
+            array_splice($this->items, $index, 1);
+        }
+        return $this;
     }
 }
