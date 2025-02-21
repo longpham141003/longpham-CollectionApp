@@ -17,14 +17,14 @@ require 'process.php';
 
     <form method="GET">
         <label for="min_price">Lọc giá trên:</label>
-        <input type="number" name="min_price" value="<?php echo $minPrice; ?>">
+        <input type="number" name="min_price" value="<?php echo htmlspecialchars($minPrice); ?>">
         <button type="submit">Lọc</button>
     </form>
 
     <ul class="product-list">
         <?php foreach ($filteredProducts->all() as $index => $product): ?>
             <li class="product">
-                <?php echo $product['name'] . ' - ' . $product['price']. '  VND'; ?>
+                <?php echo $product->display(); ?>
                 <a class="delete-btn" href="process.php?delete=<?php echo $index; ?>">Xóa</a>
             </li>
         <?php endforeach; ?>

@@ -1,8 +1,7 @@
 <?php
-namespace App;
 
 class Collection {
-    protected array $items;
+    private array $items;
 
     public function __construct(array $items = []) {
         $this->items = $items;
@@ -12,31 +11,44 @@ class Collection {
         return $this->items;
     }
 
-    public function push($item): self {
+    public function add($item): void {
         $this->items[] = $item;
-        return $this;
     }
 
-    public function filter(callable $callback): self {
-        return new self(array_filter($this->items, $callback));
-    }
-
-    public function map(callable $callback): self {
-        return new self(array_map($callback, $this->items));
+    public function count(): int {
+        return count($this->items);
     }
 
     public function first() {
-        return $this->items[0] ?? null;
+        return count($this->items) > 0 ? $this->items[0] : null;
     }
 
     public function last() {
-        return $this->items[count($this->items) - 1] ?? null;
+        return count($this->items) > 0 ? $this->items[count($this->items) - 1] : null;
     }
 
-    public function remove(int $index): self {
+    public function remove(int $index): void {
         if (isset($this->items[$index])) {
-            array_splice($this->items, $index, 1);
+            unset($this->items[$index]);
+            $this->items = array_values($this->items); 
         }
-        return $this;
+    }
+
+    public function filter(callable $callback): Collection {
+        $filtered = [];
+        foreach ($this->items as $item) {
+            if ($callback($item)) {
+                $filtered[] = $item;
+            }
+        }
+        return new Collection($filtered);
+    }
+
+    public function map(callable $callback): Collection {
+        $mapped = [];
+        foreach ($this->items as $item) {
+            $mapped[] = $callback($item);
+        }
+        return new Collection($mapped);
     }
 }
